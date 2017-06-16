@@ -368,7 +368,7 @@ class EmailType extends AbstractType
 
         // Building the form
         $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
+           FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($variantSettingsModifier) {
                 $variantSettingsModifier(
                     $event,

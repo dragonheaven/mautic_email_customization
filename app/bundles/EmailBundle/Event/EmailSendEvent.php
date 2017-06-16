@@ -336,7 +336,7 @@ class EmailSendEvent extends CommonEvent
     public function generateClickthrough()
     {
         $source       = $this->getSource();
-        $email        = $this-0>getEmail();
+        $email        = $this->getEmail();
         $clickthrough = [
             //what entity is sending the email?
             'source' => $source,

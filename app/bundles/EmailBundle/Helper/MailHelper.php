@@ -1343,6 +1343,54 @@ class MailHelper
     }
 
     /**
+     * @param $source
+     * @param string $fieldType
+     *
+     * @return $validLeadField
+     */
+    public function getValidLeadField($source, $fieldType = 'text')
+    {
+        $lead       = $this->lead;
+        $tokenRegex = [
+            '/({|%7B)leadfield=(.*?)(}|%7D)/',
+            '/({|%7B)contactfield=(.*?)(}|%7D)/',
+        ];
+
+        $type           = 'text';
+        $validLeadField = null;
+        $match          = null;
+        $alias          = null;
+
+        if (preg_match($tokenRegex[0], $source, $match)) {
+            $alias          = $match[2];
+            $validLeadField = (!empty($lead[$alias])) ? $lead[$alias] : null;
+            if ($alias == 'email' || $alias == 'companyemail') {
+                $type = 'email';
+            }
+        } else {
+            if (preg_match($tokenRegex[1], $source, $match)) {
+                $alias          = $match[2];
+                $validLeadField = (!empty($lead[$alias])) ? $lead[$alias] : null;
+                if ($alias == 'email' || $alias == 'companyemail') {
+                    $type = 'email';
+                }
+            } else {
+                // Validate if it is valid email string
+                if (filter_var($source, FILTER_VALIDATE_EMAIL)) {
+                    $type = 'email';
+                }
+                $validLeadField = $source;
+            }
+        }
+
+        if ($fieldType == $type) {
+            return $validLeadField;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * @param Email $email
      * @param bool  $allowBcc            Honor BCC if set in email
      * @param array $slots               Slots configured in theme
@@ -1363,8 +1411,25 @@ class MailHelper
         // Set message settings from the email
         $this->setSubject($subject);
 
+        // Get valid field values from leads
         $fromEmail = $email->getFromAddress();
         $fromName  = $email->getFromName();
+        $toAddress = $email->getToAddress();
+        $ccAddress = $email->getCcAddress();
+
+        $fromName  = $this->getValidLeadField($fromName);
+        $fromEmail = $this->getValidLeadField($fromEmail, 'email');
+        $toAddress = $this->getValidLeadField($toAddress, 'email');
+        $ccAddress = $this->getValidLeadField($ccAddress, 'email');
+
+        if (!empty($toAddress)) {
+            $this->addTo($toAddress);
+        }
+
+        if (!empty($ccAddress)) {
+            $this->addCc($ccAddress);
+        }
+
         if (!empty($fromEmail) || !empty($fromName)) {
             if (empty($fromName)) {
                 $fromName = array_values($this->from)[0];
