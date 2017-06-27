@@ -43,10 +43,6 @@ class Email extends FormEntity implements VariantEntityInterface, TranslationEnt
     use DynamicContentEntityTrait;
 
     /**
-     * custom variable defined by Eric Jen 6/11/2017.
-     */
-
-    /**
      * @var string
      */
     private $ccAddress;
@@ -241,7 +237,7 @@ class Email extends FormEntity implements VariantEntityInterface, TranslationEnt
             ->nullable()
             ->build();
 
-        /**
+        /*
          * Modified by Eric J. 6/10/2017.
          */
         $builder->createField('toAddress', 'string')
@@ -363,33 +359,6 @@ class Email extends FormEntity implements VariantEntityInterface, TranslationEnt
                 ]
             )
         );
-
-        /*$metadata->addPropertyConstraint(
-            'fromAddress',
-            new \Symfony\Component\Validator\Constraints\Email(
-                [
-                    'message' => 'mautic.core.email.required',
-                ]
-            )
-        );
-
-        $metadata->addPropertyConstraint(
-            'replyToAddress',
-            new \Symfony\Component\Validator\Constraints\Email(
-                [
-                    'message' => 'mautic.core.email.required',
-                ]
-            )
-        );
-
-        $metadata->addPropertyConstraint(
-            'bccAddress',
-            new \Symfony\Component\Validator\Constraints\Email(
-                [
-                    'message' => 'mautic.core.email.required',
-                ]
-            )
-        );*/
 
         $metadata->addConstraint(new Callback([
             'callback' => function (Email $email, ExecutionContextInterface $context) {

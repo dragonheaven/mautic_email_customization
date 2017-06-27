@@ -19,7 +19,6 @@ use Mautic\EmailBundle\Entity\Email;
 use Mautic\EmailBundle\Form\Type\ExampleSendType;
 use Mautic\LeadBundle\Model\ListModel;
 use MauticPlugin\MauticCitrixBundle\Helper\CitrixHelper;
-use Monolog\Logger;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Response;
@@ -561,8 +560,6 @@ class EmailController extends FormController
                 'mauticContent' => 'email',
             ];
 
-
-
             // Check to see if this is a popup
             if (isset($form['updateSelect'])) {
                 $template    = false;
@@ -683,8 +680,6 @@ class EmailController extends FormController
         //Create the form
         $action = $this->generateUrl('mautic_email_action', ['objectAction' => 'edit', 'objectId' => $objectId]);
 
-
-
         $updateSelect = ($method == 'POST')
             ? $this->request->request->get('emailform[updateSelect]', false, true)
             : $this->request->get(
@@ -698,9 +693,6 @@ class EmailController extends FormController
         }
         /** @var Form $form */
         $form = $model->createForm($entity, $this->get('form.factory'), $action, ['update_select' => $updateSelect]);
-
-//        $logger = $this->container->get('logger');
-//        $logger->info(sprintf('Your cc address is %s', $form['ccAddress']->getData()));
 
         ///Check for a submitted form and process it
         if (!$ignorePost && $method == 'POST') {

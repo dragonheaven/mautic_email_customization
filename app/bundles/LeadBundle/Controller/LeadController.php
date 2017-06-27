@@ -1703,11 +1703,6 @@ class LeadController extends FormController
                         // To lead
                         $mailer->addTo($leadEmail, $leadName);
 
-                        /**
-                         * CC address
-                         * $mailer->addCC($ccEmail, $ccName);
-                         */
-
                         // From user
                         $user = $this->get('mautic.helper.user')->getUser();
 
