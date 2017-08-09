@@ -1,7 +1,7 @@
 Mautic Email Channel Enhancement.
 ------
 
-# Added To Address & CC Address to email advance tab and allowed tokens in fields.
+#### Added To Address & CC Address to email advance tab and allowed tokens in fields.
 
 - 1. Use Case
 > Mautic defined only user's address as To address. And To address and CC can have only one recipient.
@@ -14,6 +14,6 @@ By default, Mautic does not support Tokens for header fields, only for plain tex
 > So users can use mixed form like {contactfield=wivesemail};johndoe@me.com,{contactfield=ownersemail}.
 
 - 2. Token examples
-{contactfield=email}
-{contactfield=customfield}
-{contactfield=customfield};email
+> {contactfield=email}
+> {contactfield=customfield}
+> {contactfield=customfield};email
