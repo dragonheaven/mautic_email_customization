@@ -1,6 +1,6 @@
 Mautic Email Channel Enhancement.
 
-##Added To Address & CC Address to email advance tab and allowed tokens in fields.
+Added To Address & CC Address to email advance tab and allowed tokens in fields.
 1. Use Case
 Mautic defined only user's address as To address. And To address and CC can have only one recipient.
 I customized to be enable custom To address (ie.owner's email or spouser's email), multiple To address and CC, BCC address separated by semi-colon(;) or comma(,).
